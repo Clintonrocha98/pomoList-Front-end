@@ -11,19 +11,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { createSesson } from "@/service/createSesson";
-import { useToast } from "@/components/ui/use-toast";
 import { TypeInputLoginError } from "@/types";
 import { LoginForm, zodLoginSchema } from "@/utils/zod";
 import { z } from "zod";
 
-import { ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { ChangeEvent, useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 const LoginPage = () => {
-  const router = useRouter();
-  const { toast } = useToast();
-
+  const { signIn } = useContext(AuthContext);
   const [formValues, setFormValues] = useState<LoginForm>({
     email: "",
     password: "",
@@ -36,17 +32,7 @@ const LoginPage = () => {
 
     try {
       zodLoginSchema.parse(formValues);
-      setValidationErrors({});
-      const result = await createSesson(formValues);
-
-      if (result) {
-        // router.push("/");
-      } else {
-        toast({
-          variant: "destructive",
-          description: result,
-        });
-      }
+      await signIn(formValues);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors: { [key: string]: string } = {};
