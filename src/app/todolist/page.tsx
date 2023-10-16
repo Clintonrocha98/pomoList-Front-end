@@ -32,7 +32,7 @@ const TodoList = () => {
   const fetchTasks = async () => {
     if (userId) {
       try {
-        const allTasks = await getAllTasks(userId);
+        const allTasks = await getAllTasks({ userId });
         setNewTask(allTasks.tasks);
       } catch (error) {
         console.error("Erro ao buscar os itens do servidor", error);
