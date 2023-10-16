@@ -24,8 +24,8 @@ const TodoList = () => {
     title: "",
     description: "",
     isFinished: false,
-    userId: userId,
-    token: token,
+    userId: "",
+    token: "",
   });
   const [newTask, setNewTask] = useState<typeBodyTasks[]>([]);
 
@@ -48,6 +48,7 @@ const TodoList = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      setTaskDataSubmit({ ...taskData, userId: userId, token: token });
       const response = await createTask(taskData);
 
       setNewTask([...newTask, response]);
@@ -55,8 +56,8 @@ const TodoList = () => {
         title: "",
         description: "",
         isFinished: false,
-        userId: userId,
-        token: token,
+        userId: "",
+        token: "",
       });
     } catch (error) {
       console.log(error);
