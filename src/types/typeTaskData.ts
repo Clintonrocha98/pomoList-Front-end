@@ -1,7 +1,7 @@
 export type taskData = {
+  id?: string;
   title: string;
   description: string;
   isFinished: boolean;
-  userId: string | undefined;
-  token: string | undefined;
+  userId: string;
 };

@@ -1,4 +1,4 @@
-import { taskData, typeBodyTasks } from "@/types";
+import { taskData } from "@/types";
 import axiosApi from "./axiosApi";
 
 export async function createTask({
@@ -8,14 +8,14 @@ export async function createTask({
   userId,
 }: taskData) {
   try {
-    const response = await axiosApi.post("/createTask", {
+    const response = await axiosApi.post("/createtask", {
       title,
       description,
       isFinished,
       userId,
     });
 
-    return response.data.newTask;
+    return response.data;
   } catch (error) {
     console.error(error);
     return error;

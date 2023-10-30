@@ -13,27 +13,26 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createTask } from "@/service/createTask";
 import { getAllTasks } from "@/service/getAllTasks";
-import { taskData, typeBodyTasks } from "@/types";
+import { taskData } from "@/types";
 import { getCookie } from "cookies-next";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const TodoList = () => {
   const userId = getCookie("userId");
-  const token = getCookie("pomolist-token");
+
   const [taskData, setTaskDataSubmit] = useState<taskData>({
     title: "",
     description: "",
     isFinished: false,
-    userId: "",
-    token: "",
+    userId: userId ?? "",
   });
-  const [newTask, setNewTask] = useState<typeBodyTasks[]>([]);
+  const [newTask, setNewTask] = useState<taskData[]>([]);
 
   const fetchTasks = async () => {
     if (userId) {
       try {
         const allTasks = await getAllTasks({ userId });
-        setNewTask(allTasks.tasks);
+        setNewTask(allTasks);
       } catch (error) {
         console.error("Erro ao buscar os itens do servidor", error);
       }
@@ -48,16 +47,14 @@ const TodoList = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      setTaskDataSubmit({ ...taskData, userId: userId, token: token });
       const response = await createTask(taskData);
-
-      setNewTask([...newTask, response]);
+      const updatedNewTask = newTask.length === 0 ? [response] : [...newTask, response];
+      setNewTask(updatedNewTask);
       setTaskDataSubmit({
         title: "",
         description: "",
         isFinished: false,
         userId: "",
-        token: "",
       });
     } catch (error) {
       console.log(error);
@@ -87,6 +84,7 @@ const TodoList = () => {
                   id="title"
                   name="title"
                   required
+                  value={taskData.title}
                   placeholder="Em que você está trabalhando?"
                   onChange={handleInputChange}
                 />
@@ -95,6 +93,7 @@ const TodoList = () => {
                   required
                   name="description"
                   placeholder="Descricão."
+                  value={taskData.description}
                   onChange={handleInputChange}
                 />
               </div>

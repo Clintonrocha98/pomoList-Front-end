@@ -11,7 +11,7 @@ export async function deleteTask({
   userId,
 }: typeIds): Promise<boolean> {
   try {
-    await axiosApi.delete("/deleteTask", {
+    await axiosApi.delete("/deletetask", {
       data: { id: taskId, userId: userId },
     });
 

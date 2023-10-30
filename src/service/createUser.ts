@@ -4,7 +4,7 @@ import axiosApi from "./axiosApi";
 
 export async function createUser(data: SignupForm): Promise<boolean> {
   try {
-    const response = await axiosApi.post("/createUser", data);
+    const response = await axiosApi.post("/createuser", data);
     if (response.data.error) {
       throw new Error("usuario invalido");
     }
