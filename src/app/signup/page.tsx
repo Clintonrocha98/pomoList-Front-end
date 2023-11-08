@@ -15,16 +15,16 @@ import { TypeInputSignupError } from "@/types";
 import { SignupForm, zodSignupSchema } from "@/utils/zod";
 import { z } from "zod";
 
-import { ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { ChangeEvent, useContext, useState } from "react";
 
 import { AlertError } from "@/components/AlertError";
 import { createUser } from "@/service/createUser";
 import { useToast } from "@/components/ui/use-toast";
-
+import { AuthContext } from "@/context/AuthContext";
 
 const SignupPage = () => {
-  const router = useRouter();
+  const { signIn } = useContext(AuthContext);
+
   const [formValues, setFormValues] = useState<SignupForm>({
     name: "",
     email: "",
@@ -44,15 +44,20 @@ const SignupPage = () => {
       setValidationErrors({});
       const result = await createUser(formValues);
 
-      if (result === true) {
+      if (result) {
         toast({
           description: "Usuário criado com sucesso!",
         });
-        router.push("/");
+        
+        await signIn({
+          email: formValues.email,
+          password: formValues.password,
+        });
+        
       } else {
         toast({
           variant: "destructive",
-          description: result,
+          description: "usuario invalido!",
         });
       }
     } catch (error) {
