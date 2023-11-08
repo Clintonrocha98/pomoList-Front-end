@@ -32,7 +32,9 @@ const TodoList = () => {
     if (userId) {
       try {
         const allTasks = await getAllTasks({ userId });
-        setNewTask(allTasks);
+        if (allTasks) {
+          setNewTask(allTasks);
+        }
       } catch (error) {
         console.error("Erro ao buscar os itens do servidor", error);
       }
@@ -41,14 +43,14 @@ const TodoList = () => {
 
   useEffect(() => {
     fetchTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const response = await createTask(taskData);
-      const updatedNewTask = newTask.length === 0 ? [response] : [...newTask, response];
+      const updatedNewTask =
+        newTask.length === 0 ? [response] : [...newTask, response];
       setNewTask(updatedNewTask);
       setTaskDataSubmit({
         title: "",
