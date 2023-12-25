@@ -28,20 +28,21 @@ const TodoList = () => {
   });
   const [newTask, setNewTask] = useState<taskData[]>([]);
 
-  const fetchTasks = async () => {
-    if (userId) {
-      try {
-        const allTasks = await getAllTasks({ userId });
-        if (allTasks) {
-          setNewTask(allTasks);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar os itens do servidor", error);
-      }
-    }
-  };
 
   useEffect(() => {
+    const fetchTasks = async () => {
+      if (userId) {
+        try {
+          const allTasks = await getAllTasks({ userId });
+          if (allTasks) {
+            setNewTask(allTasks);
+          }
+        } catch (error) {
+          console.error("Erro ao buscar os itens do servidor", error);
+        }
+      }
+    };
+
     fetchTasks();
   }, []);
 
@@ -49,15 +50,19 @@ const TodoList = () => {
     event.preventDefault();
     try {
       const response = await createTask(taskData);
+
       const updatedNewTask =
         newTask.length === 0 ? [response] : [...newTask, response];
+
       setNewTask(updatedNewTask);
+
       setTaskDataSubmit({
         title: "",
         description: "",
         isFinished: false,
-        userId: "",
+        userId: userId ?? "",
       });
+
     } catch (error) {
       console.log(error);
     }
