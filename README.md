@@ -12,19 +12,6 @@ O frontend do projeto PomoList foi desenvolvido utilizando tecnologias modernas 
 - Cookies-Next
 - Next Themes
 
-## Estrutura de Páginas
-
-Página Inicial (/)
-Página de Login (/login):
-Página de Cadastro de Usuário (/signup):
-Página de Cadastro de Tarefa (/create-task):
-
-Permite que usuários autenticados criem novas tarefas.
-
-<img src="">
-<img src="">
-<img src="">
-<img src="">
 
 ## Configuração de uso
 
@@ -32,3 +19,16 @@ Permite que usuários autenticados criem novas tarefas.
 npm install # Instalar as dependências
 npm run dev # Iniciar o servidor
 ```
+## Estrutura de Páginas
+
+### Página Inicial (/)
+<img src="https://raw.githubusercontent.com/Clintonrocha98/pomoList-Front-end/main/.vscode/3.webp">
+
+### Página de Login (/login):
+<img src="https://raw.githubusercontent.com/Clintonrocha98/pomoList-Front-end/main/.vscode/1.webp">
+
+### Página de Cadastro de Usuário (/signup):
+<img src="https://raw.githubusercontent.com/Clintonrocha98/pomoList-Front-end/main/.vscode/2.webp">
+
+### Página de tasks (/todolist)
+<img src="https://raw.githubusercontent.com/Clintonrocha98/pomoList-Front-end/main/.vscode/4.webp">
